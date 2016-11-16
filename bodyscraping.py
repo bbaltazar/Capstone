@@ -74,3 +74,4 @@ if __name__ == '__main__':
 In terminal: export MongoDB collection to CSV excluding '<>':
 <mongoexport --db bodyscrape --collection products --type csv --out products.csv\
  --fields 'totalItems','productReviews'>
+'''
