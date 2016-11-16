@@ -12,6 +12,7 @@ class BBcom(object):
         self.load_data()
         self.brand_urls = None
         self.brand_num_list = []
+
     def load_data(self):
         self.db = self.client['bodyscrape']
         self.coll = self.db['products']
@@ -24,7 +25,7 @@ class BBcom(object):
         #return self.brand_urls
 
     def brand_numbers(self):
-        for url in self.brand_urls[1:3]:
+        for url in self.brand_urls:
             z = requests.get(url)
             soup = BeautifulSoup(z.content, 'html.parser')
             tags = soup.findAll(attrs={'class':'product-image'})
@@ -38,9 +39,9 @@ class BBcom(object):
         Inserts JSON dictionary entries into db.products collection
         '''
         params = {\
-              'page':1,
-          'reviewType':'verified',
-          'size':500} # foo.json()['totalItems'] gives total size but cannot call until foo.json initiated
+             # 'page':1, # explicitly giving page # may not result or will result with wrong size query
+          'reviewType':'verified'}
+          #,'size':500} # foo.json()['totalItems'] gives total size but cannot call until foo.json initiated
         headers = {\
                    'Accept':'application/json',
         'Accept-Encoding':'gzip, deflate, sdch, br',
@@ -53,7 +54,6 @@ class BBcom(object):
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36}'
                   }
         for num in self.brand_num_list:
-
             url = 'https://catalog.bodybuilding.com/products/'+str(num)+'/reviews'
             r = requests.get(url, headers=headers, params=params)
             r_json = r.json()
@@ -65,9 +65,12 @@ class BBcom(object):
 if __name__ == '__main__':
 
     client = MongoClient()
-
     script = BBcom(client)
     script.brand_list()
     script.brand_numbers()
     script.insert_product()
     client.close()
+'''
+In terminal: export MongoDB collection to CSV excluding '<>':
+<mongoexport --db bodyscrape --collection products --type csv --out products.csv\
+ --fields 'totalItems','productReviews'>
