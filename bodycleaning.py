@@ -26,7 +26,7 @@ class BBclean(object):
                     for i in xrange(self.df.shape[0]):
                         try:
                             column_list.append(model.df[new_col][i][sub_col])
-                        except:
+                        except TypeError:
                             column_list.append(None)
                     self.df[sub_col] = column_list
 
@@ -35,14 +35,14 @@ class BBclean(object):
             try:
                 if len(self.df[col].unique()) ==1:
                     self.del_cols.append(col)
-            except:
+            except TypeError:
                 pass
 
     def del_columns(self):
         self.df.drop(self.del_cols, axis=1, inplace=True)
 
 if __name__ == '__main__':
-    model = BBmodel()
+    model = BBclean()
     model.add_columns()
     model.check_useless()
     model.del_columns()
