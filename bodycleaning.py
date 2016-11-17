@@ -8,7 +8,7 @@ class BBclean(object):
 
     def __init__(self):
         self.df = pd.read_csv('products.csv')
-        self.del_cols = ['productReviews']
+        self.del_cols = []
         self.new_cols = []
 
     def add_columns(self):
@@ -18,6 +18,7 @@ class BBclean(object):
             self.df[col] = [self.df.productReviews[i][col] \
             for i in xrange(self.df.shape[0])]
             self.new_cols.append(col)
+        self.del_cols.append('productReviews')
         for new_col in self.new_cols:
             if type(self.df[new_col][0]) == dict:
                 self.del_cols.append(new_col)
