@@ -14,7 +14,13 @@ from string import punctuation
     drop down of weight in pounds with switcher of lb/kg
     toggler of price range, goal, if specific item recommend or stack
 
-2. Output recommended products
+2. Output recommended nutrition products
+
+3. To Do:
+Learn selenium
+NMF
+TF-IDF
+Clustering
 
 '''
 
