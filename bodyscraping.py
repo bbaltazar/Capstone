@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from IPython.core.display import HTML
 from bs4 import BeautifulSoup
+from selenium import webdriver
 import pandas as pd
 import StringIO
 import requests
