@@ -1,11 +1,10 @@
 from bodyscraping import BBcom
 import json
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
 
-class BBmodel(object):
+class BBclean(object):
 
     def __init__(self):
         self.df = pd.read_csv('products.csv')
