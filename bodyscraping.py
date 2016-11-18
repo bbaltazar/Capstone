@@ -39,9 +39,9 @@ class BBcom(object):
         Inserts JSON dictionary entries into db.products collection
         '''
         params = {\
-             # 'page':1, # explicitly giving page # may not result or will result with wrong size query
-          'reviewType':'verified'}
-          #,'size':500} # foo.json()['totalItems'] gives total size but cannot call until foo.json initiated
+             'page':0,
+          'reviewType':'verified',
+          'size':1} # foo.json()['totalItems'] gives total size but cannot call until foo.json initiated
         headers = {\
                    'Accept':'application/json',
         'Accept-Encoding':'gzip, deflate, sdch, br',
@@ -59,7 +59,14 @@ class BBcom(object):
             r_json = r.json()
             # if r.content != '{"totalItems":0,"productReviews":[]}':
             if r_json['productReviews']:
-                self.coll.insert_one(r_json)
+                for i in xrange(r.json()['totalItems']):
+                    params = {\
+                            'page':i,
+                      'reviewType':'verified',
+                            'size':'1'}
+                    r = requests.get(url, headers=headers, params=params)
+                    r_json = r.json()
+                    self.coll.insert_one(r_json)
 
 
 if __name__ == '__main__':
