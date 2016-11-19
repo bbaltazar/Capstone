@@ -44,6 +44,6 @@ class BBclean(object):
 
 if __name__ == '__main__':
     model = BBclean()
-    model.add_columns()
-    model.check_useless()
-    model.del_columns()
+    # model.add_columns()
+    # model.check_useless()
+    # model.del_columns()

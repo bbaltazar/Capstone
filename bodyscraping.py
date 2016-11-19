@@ -41,7 +41,7 @@ class BBcom(object):
         params = {\
              'page':0,
           'reviewType':'verified',
-          'size':1} # foo.json()['totalItems'] gives total size but cannot call until foo.json initiated
+          'size':'1'} # foo.json()['totalItems'] gives total size but cannot call until foo.json initiated
         headers = {\
                    'Accept':'application/json',
         'Accept-Encoding':'gzip, deflate, sdch, br',
@@ -56,17 +56,15 @@ class BBcom(object):
         for num in self.brand_num_list:
             url = 'https://catalog.bodybuilding.com/products/'+str(num)+'/reviews'
             r = requests.get(url, headers=headers, params=params)
-            r_json = r.json()
-            # if r.content != '{"totalItems":0,"productReviews":[]}':
-            if r_json['productReviews']:
+            if r.json()['productReviews']:
                 for i in xrange(r.json()['totalItems']):
                     params = {\
                             'page':i,
                       'reviewType':'verified',
                             'size':'1'}
-                    r = requests.get(url, headers=headers, params=params)
-                    r_json = r.json()
-                    self.coll.insert_one(r_json)
+                    z = requests.get(url, headers=headers, params=params)
+                    z_json = z.json()
+                    self.coll.insert_one(z_json)
 
 
 if __name__ == '__main__':
@@ -75,7 +73,7 @@ if __name__ == '__main__':
     script = BBcom(client)
     script.brand_list()
     script.brand_numbers()
-    script.insert_product()
+    # script.insert_product()
     client.close()
 '''
 In terminal: export MongoDB collection to CSV excluding '<>':
