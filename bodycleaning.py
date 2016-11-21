@@ -1,4 +1,5 @@
 from bodyscraping import BBcom
+import graphlab as gl
 import json
 import numpy as np
 import pandas as pd
@@ -7,11 +8,11 @@ import pandas as pd
 class BBclean(object):
 
     def __init__(self):
-        self.df = pd.read_csv('products.csv')
+        self.df = pd.read_csv('../products.csv')
         self.del_cols = []
         self.new_cols = []
 
-    def add_columns(self):
+    def expand_columns(self):
         self.df.productReviews = \
         self.df.productReviews.apply(lambda x: json.loads(x)[0]) #changes str to dict
         for col in self.df.productReviews[0].keys():
@@ -30,6 +31,8 @@ class BBclean(object):
                         except TypeError:
                             column_list.append(None)
                     self.df[sub_col] = column_list
+        self.df['rating'] = [self.df.userRating[i]['overallRating'] for i in xrange(model.df.shape[0])]
+
 
     def check_useless(self):
         for col in self.df.columns:
@@ -42,8 +45,9 @@ class BBclean(object):
     def del_columns(self):
         self.df.drop(self.del_cols, axis=1, inplace=True)
 
+
 if __name__ == '__main__':
-    model = BBclean()
-    # model.add_columns()
-    # model.check_useless()
-    # model.del_columns()
+    data = BBclean()
+    data.add_columns()
+    model.check_useless()
+    model.del_columns()
