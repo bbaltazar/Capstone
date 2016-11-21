@@ -26,11 +26,11 @@ class BBclean(object):
                     column_list = []
                     for i in xrange(self.df.shape[0]):
                         try:
-                            column_list.append(model.df[new_col][i][sub_col])
+                            column_list.append(data.df[new_col][i][sub_col])
                         except TypeError:
                             column_list.append(None)
                     self.df[sub_col] = column_list
-        self.df['rating'] = [self.df.userRating[i]['overallRating'] for i in xrange(model.df.shape[0])]
+        self.df['rating'] = [self.df.userRating[i]['overallRating'] for i in xrange(self.df.shape[0])]
 
 
     def check_useless(self):
@@ -50,5 +50,5 @@ class BBclean(object):
 if __name__ == '__main__':
     data = BBclean()
     data.expand_columns()
-    model.check_useless()
-    model.del_columns()
+    data.check_useless()
+    data.del_columns()
