@@ -1,5 +1,4 @@
 from bodyscraping import BBcom
-import graphlab as gl
 import json
 import numpy as np
 import pandas as pd
@@ -46,8 +45,10 @@ class BBclean(object):
         self.df.drop(self.del_cols, axis=1, inplace=True)
 
 
+
+
 if __name__ == '__main__':
     data = BBclean()
-    data.add_columns()
+    data.expand_columns()
     model.check_useless()
     model.del_columns()
