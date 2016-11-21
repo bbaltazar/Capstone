@@ -44,8 +44,35 @@ class BBclean(object):
     def del_columns(self):
         self.df.drop(self.del_cols, axis=1, inplace=True)
 
+    '''
+    Graphlab
+    User Rating by Brand
+    sf_1 = gl.SFrame(data.df[['userId', 'brandId', 'rating']])
+    model_1_brand = gl.toolkits.recommender.create(sf_1, \
+    user_id = 'userId', item_id='brandId', target='rating')
+    Final objective value: 1.78124
+    Final training RMSE: 0.940268
+    '''
 
+    '''
+    Graphlab
+    User Rating by Product
+    sf_2 = gl.SFrame(data.df[['userId', 'productId', 'rating']])
+    model_2_product = gl.toolkits.recommender.create(sf_2, \
+    user_id = 'userId', item_id='productId', target='rating')
+    Final objective value: 1.01031
+    Final training RMSE: 0.504773
+    '''
 
+    '''
+    Graphlab
+    User Rating in General
+    sf_3 = gl.SFrame(data.df[['userId', '_id', 'rating']])
+    model_3_purchase = gl.toolkits.recommender.create(sf_3, \
+    user_id = 'userId', item_id='_id', target='rating')
+    Final objective value: 2.52944
+    Final training RMSE: 0.512273
+    '''
 
 if __name__ == '__main__':
     data = BBclean()
