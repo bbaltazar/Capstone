@@ -8,10 +8,11 @@ import requests
 class BBcom(object):
 
     def __init__(self, client):
+        self.brand_num_list = []
+        self.brand_urls = None
         self.client = client
         self.load_data()
-        self.brand_urls = None
-        self.brand_num_list = []
+        
 
     def load_data(self):
         self.db = self.client['bodyscrape']
@@ -22,7 +23,6 @@ class BBcom(object):
         soup = BeautifulSoup(z.content, 'html.parser')
         self.brand_urls = [soup.findAll(id='brandName')[i]['href'] for i in
         xrange(len(soup.findAll(id='brandName')))]
-        #return self.brand_urls
 
     def brand_numbers(self):
         for url in self.brand_urls:
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     script = BBcom(client)
     script.brand_list()
     script.brand_numbers()
-    # script.insert_product()
+    script.insert_product()
     client.close()
 '''
 In terminal: export MongoDB collection to CSV excluding '<>':

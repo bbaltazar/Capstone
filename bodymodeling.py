@@ -1,10 +1,12 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from string import punctuation
+from bodycleaning import BBcom
+import graphlab as gl
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import pandas as pd
+# from nltk.corpus import stopwords
+# from nltk.stem.snowball import SnowballStemmer
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from string import punctuation
 
 '''
 1. Build a recommender system with a web app that contains:
@@ -27,6 +29,9 @@ Clustering
 class BBmodel(object):
 
     def __init__(self):
+
+    def graphlab_rec(self):
+
 
     def my_tokenizer(self, x):
         stop = set(stopwords.words('english'))
