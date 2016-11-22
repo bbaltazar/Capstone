@@ -74,6 +74,29 @@ class BBclean(object):
     Final training RMSE: 0.512273
     '''
 
+    '''
+    https://turi.com/learn/userguide/recommender/choosing-a-model.html
+    Side information for users, items, and observations
+In many cases, additional information about the users or items can
+improve the quality of the recommendations. For example, including information
+about the genre and year of a movie can be useful information in recommending
+movies. We call this type of information user side data or item side data
+depending on whether it goes with the user or the item.
+Including side data is easy with the user_data or item_data parameters to
+the recommender.create() function. These arguments are SFrames and must have
+a user or item column that corresponds to the user_id and item_id columns in
+the observation data. Internally, the data is joined to the particular user
+or item when training the model, the data is saved with the model and also used
+to make recommendations.
+In particular, the FactorizationRecommender and the
+RankingFactorizationRecommender both incorporate the side data into the
+prediction through additional interaction terms between the user, the item,
+and the side feature. For the actual formula, see the API docs for the
+FactorizationRecommender. Both of these models also allow you to obtain the
+parameters that have been learned for each of the side features via the
+m['coefficients'] argument.
+    '''
+
 if __name__ == '__main__':
     data = BBclean()
     data.expand_columns()
