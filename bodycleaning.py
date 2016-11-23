@@ -80,9 +80,9 @@ class BBclean(object):
                 if doc:
                     docs += ' ' + doc
             corpus.append(docs)
-        tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-        tfidf = tfidf_vectorizer.fit_transform(corpus)
-        nmf = NMF(n_components = n_topics).fit(tfidf)
+        self.tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+        self.tfidf = tfidf_vectorizer.fit_transform(corpus)
+        self.nmf = NMF(n_components = n_topics).fit(self.tfidf)
 
 
     '''
