@@ -50,7 +50,7 @@ class BBclean(object):
                 if stopword in name.lower().split():
                     non_food_desc.append(name)
         non_food_desc = list(set(non_food_desc))
-        self.df = self.df[[name not in non_food_desc for name in df.name]]
+        self.df = self.df[[name not in non_food_desc for name in self.df.name]]
 
     def check_useless(self):
         for col in self.df.columns:
