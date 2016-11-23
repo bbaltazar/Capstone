@@ -1,7 +1,8 @@
+from sklearn.decomposition import NMF
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import json
 import numpy as np
 import pandas as pd
-
 
 class BBclean(object):
 
@@ -39,14 +40,14 @@ class BBclean(object):
         'kettlebell', 'short', 'shorts', 'tan', 'scale', 'cookbook', \
         'fitbook', 'wrap', 'wraps', 'schiek', 'suits', 'sling', 'tan', \
         'strap', 'straps', 'rope', 'wheel', 'station', 'roller', 'belt', \
-        'belts', 'pad', 'headphone', 'grip', 'measure kit', 'ball', 'wrist', \
+        'belts', 'pad', 'headphone', 'headphones', 'grip', 'measure kit', \
         'tracker', 'cuff', 'mat', 'harness', 'rashguard', 'chalk', 't-shirt', \
         'massage', 'tools', 'shaker', 'shakers', 'shoe', 'shoes', 'ray', \
         'bodyfit', 'funnel', 'sportmixer', 'trunk', 'bands', 'headband', \
         'superband', 'knee', 'pull-up', 'attachment', 'loop', 'yoga', 'waist'\
         'denim', 'towel', 'powerblock', 'gripz', 'clothing', 'journals', \
         'body-solid', 'gymboss', 'prohands', 'rocktape', 'plastics', 'jbl', \
-        'omron', 'coat']
+        'omron', 'coat', 'ball', 'wrist', 'exerciser']
         non_food_desc = []
         for name in self.df.name.unique():
             for stopword in non_food_stopwords:
@@ -55,16 +56,34 @@ class BBclean(object):
         non_food_desc = list(set(non_food_desc))
         self.df = self.df[[name not in non_food_desc for name in self.df.name]]
 
-    def check_useless(self):
-        for col in self.df.columns:
-            try:
-                if len(self.df[col].unique()) ==1:
-                    self.del_cols.append(col)
-            except TypeError:
-                pass
+    # def check_useless(self):
+    #     for col in self.df.columns:
+    #         try:
+    #             if len(self.df[col].unique()) ==1:
+    #                 self.del_cols.append(col)
+    #         except TypeError:
+    #             pass
+    #
+    # def del_columns(self):
+    #     self.df.drop(self.del_cols, axis=1, inplace=True)
 
-    def del_columns(self):
-        self.df.drop(self.del_cols, axis=1, inplace=True)
+    def myvectorizer(self):
+        '''
+        feature extraction with corpus being all products' reviews and each doc
+        being each particular product's reviews.
+        '''
+        n_topics = 10
+        corpus = []
+        for prodId in self.df.productId.unique():
+            docs = ''
+            for doc in self.df[data.df.productId == prodId].text:
+                if doc:
+                    docs += ' ' + doc
+            corpus.append(docs)
+        tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+        tfidf = tfidf_vectorizer.fit_transform(corpus)
+        nmf = NMF(n_components = n_topics).fit(tfidf)
+
 
     '''
     Graphlab
@@ -123,5 +142,5 @@ if __name__ == '__main__':
     data = BBclean()
     data.expand_columns()
     data.parse_food_prods()
-    data.check_useless()
-    data.del_columns()
+    # data.check_useless()
+    # data.del_columns()
