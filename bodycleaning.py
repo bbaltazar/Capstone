@@ -32,17 +32,21 @@ class BBclean(object):
         self.df['rating'] = [self.df.userRating[i]['overallRating'] for i in xrange(self.df.shape[0])]
 
     def parse_food_prods(self):
-        non_food_stopwords = ['backpack', 'bag', 'bottle', 'tank', 'tee', \
-        ' cap', 'hat', 'tights', 'bra', 'pant', 'pants', 'plate', 'organizer', \
-        'lock', 'log', 'glove', 'gloves', 'container', 'case', 'beanie', \
-        'hoodie', 'weight set', 'kettlebell', 'short', 'shorts', 'tan', \
-        'scale', 'cookbook', 'fitbook', 'wrap', 'wraps', 'denim', 'towel', \
+        non_food_stopwords = ['accessories','backpack', 'bag', 'bottle', \
+        'blenderbottle', 'tank', 'tee', ' cap', 'hat', 'tights', 'bra', \
+        'pant', 'pants', 'plate', 'organizer', 'lock', 'log', 'glove', \
+        'gloves', 'container', 'case', 'beanie', 'hoodie', 'weight set', \
+        'kettlebell', 'short', 'shorts', 'tan', 'scale', 'cookbook', \
+        'fitbook', 'wrap', 'wraps', 'schiek', 'suits', 'sling', 'tan', \
         'strap', 'straps', 'rope', 'wheel', 'station', 'roller', 'belt', \
         'belts', 'pad', 'headphone', 'grip', 'measure kit', 'ball', 'wrist', \
         'tracker', 'cuff', 'mat', 'harness', 'rashguard', 'chalk', 't-shirt', \
         'massage', 'tools', 'shaker', 'shakers', 'shoe', 'shoes', 'ray', \
         'bodyfit', 'funnel', 'sportmixer', 'trunk', 'bands', 'headband', \
-        'superband', 'knee', 'pull-up', 'attachment', 'loop', 'yoga', 'waist']
+        'superband', 'knee', 'pull-up', 'attachment', 'loop', 'yoga', 'waist'\
+        'denim', 'towel', 'powerblock', 'gripz', 'clothing', 'journals', \
+        'body-solid', 'gymboss', 'prohands', 'rocktape', 'plastics', 'jbl', \
+        'omron', 'coat']
         non_food_desc = []
         for name in self.df.name.unique():
             for stopword in non_food_stopwords:
