@@ -32,6 +32,25 @@ class BBclean(object):
                     self.df[sub_col] = column_list
         self.df['rating'] = [self.df.userRating[i]['overallRating'] for i in xrange(self.df.shape[0])]
 
+    def parse_food_prods(self):
+        non_food_stopwords = ['backpack', 'bag', 'bottle', 'tank', 'tee', \
+        ' cap', 'hat', 'tights', 'bra', 'pant', 'pants', 'plate', 'organizer', \
+        'lock', 'log', 'glove', 'gloves', 'container', 'case', 'beanie', \
+        'hoodie', 'weight set', 'kettlebell', 'short', 'shorts', 'tan', \
+        'scale', 'cookbook', 'fitbook', 'wrap', 'wraps', 'denim', 'towel', \
+        'strap', 'straps', 'rope', 'wheel', 'station', 'roller', 'belt', \
+        'belts', 'pad', 'headphone', 'grip', 'measure kit', 'ball', 'wrist', \
+        'tracker', 'cuff', 'mat', 'harness', 'rashguard', 'chalk', 't-shirt', \
+        'massage', 'tools', 'shaker', 'shakers', 'shoe', 'shoes', 'ray', \
+        'bodyfit', 'funnel', 'sportmixer', 'trunk', 'bands', 'headband', \
+        'superband', 'knee', 'pull-up', 'attachment', 'loop', 'yoga', 'waist']
+        non_food_desc = []
+        for name in self.df.name.unique():
+            for stopword in non_food_stopwords:
+                if stopword in name.lower().split():
+                    non_food_desc.append(name)
+        non_food_desc = list(set(non_food_desc))
+        self.df = self.df[[name not in non_food_desc for name in df.name]]
 
     def check_useless(self):
         for col in self.df.columns:
@@ -100,5 +119,6 @@ m['coefficients'] argument.
 if __name__ == '__main__':
     data = BBclean()
     data.expand_columns()
+    data.parse_food_prods()
     data.check_useless()
     data.del_columns()
