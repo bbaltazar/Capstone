@@ -1,5 +1,7 @@
+from nltk import SnowballStemmer
 from sklearn.decomposition import NMF
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from string import punctuation
 import json
 import numpy as np
 import pandas as pd
@@ -10,6 +12,7 @@ class BBclean(object):
         self.df = pd.read_csv('../products.csv')
         self.del_cols = []
         self.new_cols = []
+        self.n_topics = 10
 
     def expand_columns(self):
         self.df.productReviews = \
@@ -26,11 +29,18 @@ class BBclean(object):
                     column_list = []
                     for i in xrange(self.df.shape[0]):
                         try:
-                            column_list.append(data.df[new_col][i][sub_col])
+                            column_list.append(self.df[new_col][i][sub_col])
                         except TypeError:
                             column_list.append(None)
                     self.df[sub_col] = column_list
         self.df['rating'] = [self.df.userRating[i]['overallRating'] for i in xrange(self.df.shape[0])]
+
+    def clean_columns(self):
+        self.df = self.df[['brandName', 'brandId', 'name', 'productId', \
+        'username', '_id', 'height', 'weight', 'bodyfat', 'totalItems', \
+        'text', 'date', 'modDate', 'slug', 'verifiedBuyerRating', \
+        'description', 'updateStatusReason']]
+
 
     def parse_food_prods(self):
         non_food_stopwords = ['accessories','backpack', 'bag', 'bottle', \
@@ -56,34 +66,33 @@ class BBclean(object):
         non_food_desc = list(set(non_food_desc))
         self.df = self.df[[name not in non_food_desc for name in self.df.name]]
 
-    # def check_useless(self):
-    #     for col in self.df.columns:
-    #         try:
-    #             if len(self.df[col].unique()) ==1:
-    #                 self.del_cols.append(col)
-    #         except TypeError:
-    #             pass
-    #
-    # def del_columns(self):
-    #     self.df.drop(self.del_cols, axis=1, inplace=True)
+    def export_df(self):
+        self.df.to_pickle('reviews.pkl')
 
     def myvectorizer(self):
         '''
         feature extraction with corpus being all products' reviews and each doc
         being each particular product's reviews.
         '''
-        n_topics = 10
         corpus = []
+        stemmer = SnowballStemmer('english')
         for prodId in self.df.productId.unique():
-            docs = ''
-            for doc in self.df[data.df.productId == prodId].text:
+            docs = []
+            for doc in self.df[self.df.productId == prodId].text:
                 if doc:
-                    docs += ' ' + doc
-            corpus.append(docs)
+                    doc = ' '.join(stemmer.stem(word.strip(punctuation).lower()) \
+                                                    for word in doc.split())
+                    docs.append(doc)
+            corpus.append(' '.join(docs))
         self.tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-        self.tfidf = tfidf_vectorizer.fit_transform(corpus)
-        self.nmf = NMF(n_components = n_topics).fit(self.tfidf)
-
+        self.tfidf = self.tfidf_vectorizer.fit_transform(corpus)
+        self.nmf = NMF(n_components = self.n_topics).fit(self.tfidf)
+        n_topic_words = self.n_topics
+        for topic_idx, topic in enumerate(self.nmf.components_):
+            print 'Topic #{}:' .format(topic_idx)
+            print ' '.join([self.tfidf_vectorizer.get_feature_names()[i] for i \
+                                in topic.argsort()[:-n_topic_words -1:-1]])
+            print()
 
     '''
     Graphlab
@@ -141,6 +150,8 @@ m['coefficients'] argument.
 if __name__ == '__main__':
     data = BBclean()
     data.expand_columns()
-    data.parse_food_prods()
+    # data.myvectorizer()
+    data.clean_columns()
+    # data.parse_food_prods()
     # data.check_useless()
     # data.del_columns()
