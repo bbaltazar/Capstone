@@ -12,7 +12,6 @@ class BBclean(object):
         self.df = pd.read_csv('../products.csv')
         self.del_cols = []
         self.new_cols = []
-        self.n_topics = 10
 
     def expand_columns(self):
         self.df.productReviews = \
@@ -37,62 +36,14 @@ class BBclean(object):
 
     def clean_columns(self):
         self.df = self.df[['brandName', 'brandId', 'name', 'productId', \
-        'username', '_id', 'height', 'weight', 'bodyfat', 'totalItems', \
+        'username', 'userId', '_id', 'height', 'weight', 'bodyfat', 'totalItems', \
         'text', 'date', 'modDate', 'slug', 'verifiedBuyerRating', \
-        'description', 'updateStatusReason']]
-
-
-    def parse_food_prods(self):
-        non_food_stopwords = ['accessories','backpack', 'bag', 'bottle', \
-        'blenderbottle', 'tank', 'tee', ' cap', 'hat', 'tights', 'bra', \
-        'pant', 'pants', 'plate', 'organizer', 'lock', 'log', 'glove', \
-        'gloves', 'container', 'case', 'beanie', 'hoodie', 'weight set', \
-        'kettlebell', 'short', 'shorts', 'tan', 'scale', 'cookbook', \
-        'fitbook', 'wrap', 'wraps', 'schiek', 'suits', 'sling', 'tan', \
-        'strap', 'straps', 'rope', 'wheel', 'station', 'roller', 'belt', \
-        'belts', 'pad', 'headphone', 'headphones', 'grip', 'measure kit', \
-        'tracker', 'cuff', 'mat', 'harness', 'rashguard', 'chalk', 't-shirt', \
-        'massage', 'tools', 'shaker', 'shakers', 'shoe', 'shoes', 'ray', \
-        'bodyfit', 'funnel', 'sportmixer', 'trunk', 'bands', 'headband', \
-        'superband', 'knee', 'pull-up', 'attachment', 'loop', 'yoga', 'waist'\
-        'denim', 'towel', 'powerblock', 'gripz', 'clothing', 'journals', \
-        'body-solid', 'gymboss', 'prohands', 'rocktape', 'plastics', 'jbl', \
-        'omron', 'coat', 'ball', 'wrist', 'exerciser']
-        non_food_desc = []
-        for name in self.df.name.unique():
-            for stopword in non_food_stopwords:
-                if stopword in name.lower().split():
-                    non_food_desc.append(name)
-        non_food_desc = list(set(non_food_desc))
-        self.df = self.df[[name not in non_food_desc for name in self.df.name]]
+        'description', 'updateStatusReason', 'rating']]
 
     def export_df(self):
         self.df.to_pickle('reviews.pkl')
 
-    def myvectorizer(self):
-        '''
-        feature extraction with corpus being all products' reviews and each doc
-        being each particular product's reviews.
-        '''
-        corpus = []
-        stemmer = SnowballStemmer('english')
-        for prodId in self.df.productId.unique():
-            docs = []
-            for doc in self.df[self.df.productId == prodId].text:
-                if doc:
-                    doc = ' '.join(stemmer.stem(word.strip(punctuation).lower()) \
-                                                    for word in doc.split())
-                    docs.append(doc)
-            corpus.append(' '.join(docs))
-        self.tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-        self.tfidf = self.tfidf_vectorizer.fit_transform(corpus)
-        self.nmf = NMF(n_components = self.n_topics).fit(self.tfidf)
-        n_topic_words = self.n_topics
-        for topic_idx, topic in enumerate(self.nmf.components_):
-            print 'Topic #{}:' .format(topic_idx)
-            print ' '.join([self.tfidf_vectorizer.get_feature_names()[i] for i \
-                                in topic.argsort()[:-n_topic_words -1:-1]])
-            print()
+
 
     '''
     Graphlab
@@ -150,8 +101,5 @@ m['coefficients'] argument.
 if __name__ == '__main__':
     data = BBclean()
     data.expand_columns()
-    # data.myvectorizer()
-    data.clean_columns()
-    # data.parse_food_prods()
-    # data.check_useless()
-    # data.del_columns()
+    # data.clean_columns()
+    # data.export_df()
