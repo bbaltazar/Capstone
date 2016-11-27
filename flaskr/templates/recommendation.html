@@ -72,23 +72,23 @@
             </p>
         </div> -->
         <div class = 'jumbotron'>
-          <form action="post" method="post">
+          <form action="/result" method="post">
             <h1>Fill out for your personalized recommendation:</h1>
             <br>
             <!-- <p class='lead'> -->
             <p align='left'>Name: <input type="text" name="name" placeholder="Brian Baltazar"></input></p>
             <p align='left'>
-                Height: <input type="text" name="height" placeholder="68"></input>
-                <input type="radio" name="height_toggle" value="cm"> Centimeters</input>
-                <input type="radio" name="height_toggle" value="in"> Inches</input>
+                Height: <input name="height" placeholder="68" type="number" min="48" max="240" required></input>
+                <input type="radio" name="height_toggle" value="cm" required> Centimeters</input>
+                <input type="radio" name="height_toggle" value="in" required> Inches</input>
             </p>
             <p align='left'>
-                Weight: <input type="text" name="weight" placeholder="180"></input>
-                <input type="radio" name="weight_toggle" value="kg"> Kilograms</input>
-                <input type="radio" name="weight_toggle" value="lb"> Pounds</input>
+                Weight: <input name="weight" placeholder="180" type="number" min="40" max="1000" required></input>
+                <input type="radio" name="weight_toggle" value="kg" required> Kilograms</input>
+                <input type="radio" name="weight_toggle" value="lb" required> Pounds</input>
             </p>
             <p align='left'>
-                Bodyfat %: <input type="text" name="weight" placeholder="10"></input>
+                Bodyfat %: <input name="bodyfat" placeholder="10" type="number" name="quantity" min="1" max="99"></input>
             </p>
                 <!-- <select name="Product">
                 <option value="tomato">Tomato</option>
