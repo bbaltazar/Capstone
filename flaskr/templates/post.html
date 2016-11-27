@@ -3,7 +3,23 @@
 
 <head>
     <title>Bodybuilding.com Supplement Recommender</title>
+    <style type="text/css">
+      body
+      {
+        background-color:#000000;
+      }
 
+      h1
+      {
+        font-size:20px;
+        margin-top:0;
+        font-family:Arial, sans-serif;
+        text-shadow:2px 0 15px #292929;
+        letter-spacing:4px;
+        text-decoration:none;
+        color:#DDD;
+      }
+    </style>
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -20,26 +36,24 @@
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation"><a href="/">Home</a>
                     </li>
-                    <li role="presentation"><a href="recommendation">Recommendation</a>
+                    <li role="presentation" class= "active"><a href="recommendation">Recommendation</a>
                     </li>
-                    <li role="presentation" class= "active" color=red><a href="workflow">Work Flow</a>
+                    <li role="presentation"><a href="workflow">Work Flow</a>
                     </li>
                 </ul>
             </nav>
             <h3 class="text-muted">Bodybuilding.com Supplement Recommender</h3>
         </div>
 
-        <!-- <div class="jumbotron">
-            <h1>Workflow</h1>
-            <p class="lead"></p>
-            <p><a class="btn btn-lg btn-success" href="recommendation" role="button">Click here for your personalized recommendations</a>
-            </p>
-        </div> -->
+        <div class="jumbotron">
+            <h1>Based on your profile, we recommend...</h1>
+
+        </div>
 
         <div class="row marketing">
             <div class="col-lg-6">
-                <h4>Heading</h4>
-                <p>Paragraph</p>
+                <h4>Name</h4>
+                <p>{ name }</p>
 
                 <h4>Heading</h4>
                 <p>Sentences</p>
@@ -58,6 +72,9 @@
               <h4>Heading</h4>
               <p>Sentences</p>
             </div>
+            <p class="lead" align="right">
+            <a class="btn btn-lg btn-success" href="recommendation" role="button">Try Again!</a>
+            </p>
         </div>
 
         <footer class="footer">

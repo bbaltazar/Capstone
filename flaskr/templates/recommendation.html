@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bodybuilding.com Supplement Recommender</title>
+    <style type="text/css">
+      body
+      {
+        background-color:#000000;
+      }
+
+      h1
+      {
+        font-size:48px;
+        margin-top:0;
+        font-family:Arial, sans-serif;
+        text-shadow:2px 0 15px #292929;
+        letter-spacing:4px;
+        text-decoration:none;
+        color:#DDD;
+      }
+
+      .jumbotron
+      {
+        /*width:500px;
+        height:200px;
+        text-align:center;
+        background-image:url(http://i.imgur.com/MQHYB.jpg);
+        background-repeat:no-repeat;*/
+        border-radius:5px;
+        margin:90px auto auto;
+        padding:80px 0;
+      }
+
+      .lead
+      {
+        background-color:rgba(255,255,255,0.6);
+        border-radius:3px;
+        box-shadow:rgba(0,0,0,0.2) 0 1px 3px;
+        font-family:Sintony, sans-serif;
+      }
+    </style>
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><a href="/">Home</a>
+                    </li>
+                    <li role="presentation" class= "active"><a href="recommendation">Recommendation</a>
+                    </li>
+                    <li role="presentation"><a href="workflow">Work Flow</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Bodybuilding.com Supplement Recommender</h3>
+        </div>
+
+        <!-- <div class="jumbotron">
+            <h1>What Supp'?!</h1>
+            <p class="lead"></p>
+            <p><a class="btn btn-lg btn-success" href="recommendation" role="button">Click here for your personalized recommendations</a>
+            </p>
+        </div> -->
+        <div class = 'jumbotron'>
+          <form action="post" method="post">
+            <h1>Fill out for your personalized recommendation:</h1>
+            <br>
+            <!-- <p class='lead'> -->
+            <p align='left'>Name: <input type="text" name="name" placeholder="Brian Baltazar"></input></p>
+            <p align='left'>
+                Height: <input type="text" name="height" placeholder="68"></input>
+                <input type="radio" name="height_toggle" value="cm"> Centimeters</input>
+                <input type="radio" name="height_toggle" value="in"> Inches</input>
+            </p>
+            <p align='left'>
+                Weight: <input type="text" name="weight" placeholder="180"></input>
+                <input type="radio" name="weight_toggle" value="kg"> Kilograms</input>
+                <input type="radio" name="weight_toggle" value="lb"> Pounds</input>
+            </p>
+            <p align='left'>
+                Bodyfat %: <input type="text" name="weight" placeholder="10"></input>
+            </p>
+                <!-- <select name="Product">
+                <option value="tomato">Tomato</option>
+                <option value="barbeque">Barbeque</option>
+                <option value="mayonnaise">Mayonnaise</option>
+                <option value="secret">Secret Sauce</option>
+                </select> -->
+                <br>
+            <p align='right'>
+            <input type="submit" value="Get Your Recommendation!">
+            <input type="reset">
+            </p>
+          </form>
+        </div>
+
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>Heading</h4>
+                <p>Paragraph</p>
+
+                <h4>Heading</h4>
+                <p>Sentences</p>
+
+                <h4>Heading</h4>
+                <p>Sentences</p>
+            </div>
+
+            <div class="col-lg-6">
+              <h4>Heading</h4>
+              <p>Sentences</p>
+
+              <h4>Heading</h4>
+              <p>Sentences</p>
+
+              <h4>Heading</h4>
+              <p>Sentences</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Brian A. Baltazar</p>
+        </footer>
+      </div>
+  </body>
+
+  </html>
