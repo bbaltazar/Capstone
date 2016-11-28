@@ -61,7 +61,7 @@ class BBmodel(object):
 
 
     def graphlab_rec(self):
-
+        pass
 
     def myvectorizer(self):
         '''
@@ -108,4 +108,5 @@ class BBmodel(object):
 
 
 if __name__ == '__main__':
-    data = BBclean()
+    data = BBmodel()
+    data.myvectorizer()

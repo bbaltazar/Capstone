@@ -28,6 +28,8 @@
         background-image:url(http://i.imgur.com/MQHYB.jpg);
         background-repeat:no-repeat;*/
         border-radius:5px;
+        border-color: black;
+        border-width: thin;
         margin:90px auto auto;
         padding:80px 0;
       }
@@ -65,12 +67,6 @@
             <h3 class="text-muted">Bodybuilding.com Supplement Recommender</h3>
         </div>
 
-        <!-- <div class="jumbotron">
-            <h1>What Supp'?!</h1>
-            <p class="lead"></p>
-            <p><a class="btn btn-lg btn-success" href="recommendation" role="button">Click here for your personalized recommendations</a>
-            </p>
-        </div> -->
         <div class = 'jumbotron'>
           <form action="/result" method="post">
             <h1>Fill out for your personalized recommendation:</h1>
@@ -90,12 +86,6 @@
             <p align='left'>
                 Bodyfat %: <input name="bodyfat" placeholder="10" type="number" name="quantity" min="1" max="99"></input>
             </p>
-                <!-- <select name="Product">
-                <option value="tomato">Tomato</option>
-                <option value="barbeque">Barbeque</option>
-                <option value="mayonnaise">Mayonnaise</option>
-                <option value="secret">Secret Sauce</option>
-                </select> -->
                 <br>
             <p align='right'>
             <input type="submit" value="Get Your Recommendation!">

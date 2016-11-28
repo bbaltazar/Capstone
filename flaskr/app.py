@@ -7,8 +7,9 @@ app = Flask(__name__)
 def main():
     return render_template('index.html')
 
-@app.route('/recommendation')#, methods=['GET', 'POST'])
+@app.route('/recommendation')
 def recommendation():
+    # df = pd.read_pickle('../reviews.pkl')
     return render_template('recommendation.html')
 
 @app.route('/workflow')
@@ -36,3 +37,13 @@ def result():
 
 if __name__ == "__main__":
     app.run()
+
+#after bodyfat in recommendation.html
+# <p align='left'>
+#     Rate a product:
+# </p>
+#     <select name="product">
+#       {%for brandName in df.brandName.unique()%}
+#         <option value={{ brandName }}>{{brandName}}</option> '''add more options if necessary'''
+#         {% endfor %}
+#     </select>
