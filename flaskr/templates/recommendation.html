@@ -76,14 +76,14 @@
             <h1>Fill out for your personalized recommendation:</h1>
             <br>
             <!-- <p class='lead'> -->
-            <p align='left'>Name: <input type="text" name="name" placeholder="Brian Baltazar"></input></p>
+            <p align='left'>Name: <input type="text" name="name" placeholder=" Brian Baltazar"></input></p>
             <p align='left'>
-                Height: <input name="height" placeholder="68" type="number" min="48" max="240" required></input>
+                Height: <input name="height" placeholder="68" type="number" step=".01" min="48" max="240" required></input>
                 <input type="radio" name="height_toggle" value="cm" required> Centimeters</input>
-                <input type="radio" name="height_toggle" value="in" required> Inches</input>
+                <input type="radio" name="height_toggle"  value="in" required> Inches</input>
             </p>
             <p align='left'>
-                Weight: <input name="weight" placeholder="180" type="number" min="40" max="1000" required></input>
+                Weight: <input name="weight" placeholder="180" type="number" step=".01" min="40" max="1000" required></input>
                 <input type="radio" name="weight_toggle" value="kg" required> Kilograms</input>
                 <input type="radio" name="weight_toggle" value="lb" required> Pounds</input>
             </p>

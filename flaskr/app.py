@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-import jinja2
+# import pandas as pd
 
 app = Flask(__name__)
 
@@ -19,7 +19,19 @@ def workflow():
 def result():
     name = request.form['name']
     fname = name.split()[0]
-    return render_template('result.html', fname=fname)
+    height_input = request.form['height']
+    if request.form['height_toggle'] == "cm":
+        height = round(float(height_input)/2.54, 2)
+    else:
+        height = round(float(height_input), 2)
+    weight_input = request.form['weight']
+    if request.form['weight_toggle'] == "kg":
+        weight = round(float(weight_input)*2.205, 2)
+    else:
+        weight = round(float(weight_input), 2)
+    return render_template('result.html', fname=fname, height=height, \
+                            height_input=height_input, weight=weight, \
+                            weight_input=weight_input)
 
 
 if __name__ == "__main__":
