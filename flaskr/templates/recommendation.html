@@ -72,7 +72,7 @@
             <h1>Fill out for your personalized recommendation:</h1>
             <br>
             <!-- <p class='lead'> -->
-            <p align='left'>Name: <input type="text" name="name" placeholder=" Brian Baltazar"></input></p>
+            <p align='left'>Name: <input type="text" name="name" placeholder="Brian Baltazar"></input></p>
             <p align='left'>
                 Height: <input name="height" placeholder="68" type="number" step=".01" min="48" max="240" required></input>
                 <input type="radio" name="height_toggle" value="cm" required> Centimeters</input>
@@ -86,11 +86,52 @@
             <p align='left'>
                 Bodyfat %: <input name="bodyfat" placeholder="10" type="number" name="quantity" min="1" max="99"></input>
             </p>
-                <br>
-                <select name="product">
-                  {%for product in df.drop_down%}
-                    <option value="product">{{ product }}</option>
-                  {% endfor %}
+            <br>
+            <p align='left'>
+                Feel free to rate some products for a stronger recommendation!
+            <br>
+            </p>
+            <select name="product">
+              <option value="0">Select a product</option>
+              {%for prod in df.drop_down%}
+                <option value="{{ prod }}">{{ prod }}</option>
+              {% endfor %}
+            </select>
+            <select name="rating">
+              <option value="0">-</option>
+              {%for i in range(1,11)%}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <select name="product2">
+              <option value="0">Select a product</option>
+              {%for prod in df.drop_down%}
+                <option value="{{ prod }}">{{ prod }}</option>
+              {% endfor %}
+            </select>
+            <select name="rating2">
+                <option value="0">-</option>
+              {%for i in range(1,11)%}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <select name="product3">
+              <option value="0">Select a product</option>
+              {%for prod in df.drop_down%}
+                <option value="{{ prod }}">{{ prod }}</option>
+              {% endfor %}
+            </select>
+            <select name="rating3">
+              <option value="0">-</option>
+              {%for i in range(1,11)%}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+
+            <br>
+            <br>
             <p align='right'>
             <input type="submit" value="Get Your Recommendation!">
             <input type="reset">

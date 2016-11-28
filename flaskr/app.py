@@ -19,21 +19,34 @@ def workflow():
 
 @app.route('/result', methods = ['POST'])
 def result():
+    df = pd.read_pickle('rateaproduct.pkl')
     name = request.form['name']
     fname = name.split()[0]
     height_input = request.form['height']
+
     if request.form['height_toggle'] == "cm":
         height = round(float(height_input)/2.54, 2)
     else:
         height = round(float(height_input), 2)
+
     weight_input = request.form['weight']
     if request.form['weight_toggle'] == "kg":
         weight = round(float(weight_input)*2.205, 2)
     else:
         weight = round(float(weight_input), 2)
+
+    if request.form['product'] != "0":
+        product = request.form['product']
+        prodnum = df[df.drop_down ==product].values[0][0]
+    else:
+        product = 'damn'
+    # else:
+    #     print "NOT RIGHT"
+        # product = prod
     return render_template('result.html', fname=fname, height=height, \
                             height_input=height_input, weight=weight, \
-                            weight_input=weight_input)
+                            weight_input=weight_input, product=product,\
+                            prodnum = prodnum, df=df)
 
 
 if __name__ == "__main__":
