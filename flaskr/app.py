@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from graphlab.toolkits.recommender import factorization_recommender
+# from graphlab.toolkits.recommender import factorization_recommender
 import pandas as pd
 
 app = Flask(__name__)
@@ -10,13 +10,12 @@ def main():
 
 @app.route('/recommendation')
 def recommendation():
-    # df = pd.read_pickle('../nutrition.pkl')
-    return render_template('recommendation.html')
+    df = pd.read_pickle('rateaproduct.pkl')
+    return render_template('recommendation.html', df=df)
 
 @app.route('/workflow')
 def workflow():
-    columns = df.columns
-    return render_template('workflow.html', columns=columns)
+    return render_template('workflow.html')
 
 @app.route('/result', methods = ['POST'])
 def result():
@@ -39,7 +38,7 @@ def result():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000)
-    df = pd.read_pickle('../nutrition.pkl')
+
 #after bodyfat in recommendation.html
 # <p align='left'>
 #     Rate a product:

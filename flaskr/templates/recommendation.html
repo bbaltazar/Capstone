@@ -87,6 +87,10 @@
                 Bodyfat %: <input name="bodyfat" placeholder="10" type="number" name="quantity" min="1" max="99"></input>
             </p>
                 <br>
+                <select name="product">
+                  {%for product in df.drop_down%}
+                    <option value="product">{{ product }}</option>
+                  {% endfor %}
             <p align='right'>
             <input type="submit" value="Get Your Recommendation!">
             <input type="reset">
