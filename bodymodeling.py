@@ -1,11 +1,10 @@
 import graphlab as gl
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import pandas as pd
-# from nltk.corpus import stopwords
-# from nltk.stem.snowball import SnowballStemmer
-# from sklearn.feature_extraction.text import TfidfVectorizer
-# from string import punctuation
+from sklearn.decomposition import NMF
+import pandas as pd
+from nltk.corpus import stopwords
+from nltk.stem.snowball import SnowballStemmer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from string import punctuation
 
 '''
 1. Build a recommender system with a web app that contains:
