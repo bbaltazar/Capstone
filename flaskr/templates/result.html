@@ -46,39 +46,20 @@
         </div>
 
         <div class="jumbotron">
-            <h3>Hi {{ fname }}. Based on your profile, we recommend...</h3>
-            {{ recs }}
+            <h4>Hi {{ fname }}. Based on your profile, we recommend...</h4>
+            <h3>{%for rec in top%}</h3>
+            {{rec}}<br>
+            {%endfor%}
+
         </div>
 
-        <div class="row marketing">
-            <div class="col-lg-6">
-                <h4>Since your height is {{ height_input }} cm,</h4>
-                <p>Your height in inches is {{ height }}</p>
-
-                <h4>Since your weight is {{ weight_input }} kg</h4>
-                <p>Your weight in pounds is {{ weight }}</p>
-
-                <h4>The product you rated is {{ product }} with a {{ rating }}</h4>
-                <p>The product number is {{ prodnum }}</p>
-            </div>
-
-            <div class="col-lg-6">
-              <h4>Heading</h4>
-              <p>Sentences</p>
-
-              <h4>Heading</h4>
-              <p>Sentences</p>
-
-              <h4>Heading</h4>
-              <p>Sentences</p>
-            </div>
             <p class="lead" align="right">
             <a class="btn btn-lg btn-success" href="recommendation" role="button">Try Again!</a>
             </p>
         </div>
 
         <footer class="footer">
-            <p>Brian A. Baltazar</p>
+            <p>  Brian A. Baltazar</p>
         </footer>
       </div>
   </body>
