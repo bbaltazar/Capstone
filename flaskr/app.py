@@ -23,10 +23,10 @@ def workflow():
 def result():
     df = pd.read_pickle('rateaproduct.pkl')
     name = request.form['name']
+    user = random.randint(1,1000000000)
     fname = name.split()[0]
-    bodyfat = request.form['bodyfat']
-    height_input = request.form['height']
 
+    height_input = request.form['height']
     if request.form['height_toggle'] == "cm":
         height = round(float(height_input)/2.54, 2)
     else:
@@ -38,43 +38,67 @@ def result():
     else:
         weight = round(float(weight_input), 2)
 
-    if request.form['product'] != "0" and request.form['rating'] != "0":
-        product = request.form['product']
-        prodnum = df[df.drop_down ==product].values[0][0]
-        rating = request.form['rating']
-    # else:
-    #     product = None
-    #     rating = None
-
-
-    if request.form['product2'] != "0" and request.form['rating2'] != "0":
-        product2 = request.form['product2']
-        prodnum2 = df[df.drop_down ==product2].values[0][0]
-        rating2 = request.form['rating2']
-
-    if request.form['product3'] != "0" and request.form['rating3'] != "0":
-        product3 = request.form['product3']
-        prodnum3 = df[df.drop_down ==product3].values[0][0]
-        rating3 = request.form['rating3']
+    form_input = {'userId':[], \
+               'productId':[], \
+                  'rating':[], \
+                'username':[], \
+                  'height':[], \
+                  'weight':[], \
+                 'bodyfat':[]}
 
     df2 = pd.read_pickle('nutrition.pkl')
+    bodyfat = df2[df2.bodyfat > 0].bodyfat.mean()
+    if request.form['bodyfat']:
+        bodyfat = int(request.form['bodyfat'])
+
+    if request.form['product'] != "0" and request.form['rating'] != "0":
+        form_input['userId'].append(user)
+        product = request.form['product']
+        prodnum = df[df.drop_down ==product].values[0][0]
+        form_input['productId'].append(prodnum)
+        rating = request.form['rating']
+        form_input['rating'].append(int(rating))
+        form_input['username'].append(name)
+        form_input['height'].append(float(height))
+        form_input['weight'].append(float(weight))
+        form_input['bodyfat'].append(bodyfat)
+
+    if request.form['product2'] != "0" and request.form['rating2'] != "0":
+        form_input['userId'].append(user)
+        product2 = request.form['product2']
+        prodnum2 = df[df.drop_down ==product2].values[0][0]
+        form_input['productId'].append(prodnum2)
+        rating2 = request.form['rating2']
+        form_input['rating'].append(int(rating2))
+        form_input['username'].append(name)
+        form_input['height'].append(float(height))
+        form_input['weight'].append(float(weight))
+        form_input['bodyfat'].append(bodyfat)
+
+    if request.form['product3'] != "0" and request.form['rating3'] != "0":
+        form_input['userId'].append(user)
+        product3 = request.form['product3']
+        prodnum3 = df[df.drop_down ==product3].values[0][0]
+        form_input['productId'].append(prodnum3)
+        rating3 = request.form['rating3']
+        form_input['rating'].append(int(rating3))
+        form_input['username'].append(name)
+        form_input['height'].append(float(height))
+        form_input['weight'].append(float(weight))
+        form_input['bodyfat'].append(bodyfat)
+
+
     sf = gl.SFrame(df2[['userId', 'productId', 'rating']])
     user_info = gl.SFrame(df2[['userId', 'height', 'weight', 'bodyfat']])
     item_info = gl.SFrame(df2[['brandName', 'name', 'brandId', 'productId', 'description']])
-    user_info = user_info.fillna('weight',0)
-    user_info = user_info.fillna('height',0)
-    user_info = user_info.fillna('bodyfat',0)
-    m = factorization_recommender.create(sf, user_id='userId', \
+    user_info = user_info.fillna('weight', df2[df2.weight > 0].weight.mean())
+    user_info = user_info.fillna('height', df2[df2.height > 0].height.mean())
+    user_info = user_info.fillna('bodyfat', df2[df2.bodyfat > 0].bodyfat.mean())
+    m = factorization_recommender.create(sf, user_id='userId', num_factors=13,\
                                         item_id='productId', target='rating',\
                                     user_data=user_info, item_data=item_info)
-    user = random.randint(1,1000000000)
-    recent_data = gl.SFrame({'userId':[user, user, user], \
-                          'productId':[prodnum, prodnum2, prodnum3], \
-                             'rating':[int(rating), int(rating2), int(rating3)], \
-                           'username':[name, name, name], \
-                             'height':[int(height), int(height), int(height)], \
-                             'weight':[float(weight), float(weight), float(weight)], \
-                            'bodyfat':[float(bodyfat), float(bodyfat), float(bodyfat)]})
+
+    recent_data = gl.SFrame(form_input)
     recs = m.recommend(users=[user], new_observation_data=recent_data)
     top = []
     for prod in recs['productId']:
@@ -83,9 +107,7 @@ def result():
 
     return render_template('result.html', fname=fname, height=height, \
                             height_input=height_input, weight=weight, \
-                            weight_input=weight_input, product=product, \
-                            product2=product2, product3=product3, \
-                            rating = rating, rating2=rating2, rating3=rating3, \
+                            weight_input=weight_input,  \
                             prodnum=prodnum, df=df, m=m, bodyfat=bodyfat,\
                             recs=recs, top=top)
 
