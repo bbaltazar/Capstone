@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from graphlab.toolkits.recommender import factorization_recommender
+from graphlab.toolkits.recommender import factorization_recommender, popularity_recommender
 import graphlab as gl
 import pandas as pd
 import random
@@ -63,6 +63,7 @@ def result():
         form_input['weight'].append(float(weight))
         form_input['bodyfat'].append(bodyfat)
 
+
     if request.form['product2'] != "0" and request.form['rating2'] != "0":
         form_input['userId'].append(user)
         product2 = request.form['product2']
@@ -94,9 +95,15 @@ def result():
     user_info = user_info.fillna('weight', df2[df2.weight > 0].weight.mean())
     user_info = user_info.fillna('height', df2[df2.height > 0].height.mean())
     user_info = user_info.fillna('bodyfat', df2[df2.bodyfat > 0].bodyfat.mean())
-    m = factorization_recommender.create(sf, user_id='userId', num_factors=13,\
-                                        item_id='productId', target='rating',\
-                                    user_data=user_info, item_data=item_info)
+
+    if request.form['product'] != "0" and request.form['rating'] != "0":
+        m = factorization_recommender.create(sf, user_id='userId', num_factors=13,\
+                                    item_id='productId', target='rating',\
+                                        user_data=user_info, item_data=item_info)
+    else:
+        m = popularity_recommender.create(sf, user_id='userId', \
+                                item_id='productId', target='rating',\
+                                        user_data=user_info, item_data=item_info)
 
     recent_data = gl.SFrame(form_input)
     recs = m.recommend(users=[user], new_observation_data=recent_data)
@@ -108,7 +115,7 @@ def result():
     return render_template('result.html', fname=fname, height=height, \
                             height_input=height_input, weight=weight, \
                             weight_input=weight_input,  \
-                            prodnum=prodnum, df=df, m=m, bodyfat=bodyfat,\
+                            bodyfat=bodyfat,\
                             recs=recs, top=top)
 
 
