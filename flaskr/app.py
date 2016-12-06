@@ -88,6 +88,30 @@ def result():
         form_input['weight'].append(float(weight))
         form_input['bodyfat'].append(bodyfat)
 
+    if request.form['product4'] != "0" and request.form['rating4'] != "0":
+        form_input['userId'].append(user)
+        product4 = request.form['product4']
+        prodnum4 = df[df.drop_down ==product4].values[0][0]
+        form_input['productId'].append(prodnum4)
+        rating4 = request.form['rating4']
+        form_input['rating'].append(int(rating4))
+        form_input['username'].append(name)
+        form_input['height'].append(float(height))
+        form_input['weight'].append(float(weight))
+        form_input['bodyfat'].append(bodyfat)
+
+    if request.form['product5'] != "0" and request.form['rating5'] != "0":
+        form_input['userId'].append(user)
+        product5 = request.form['product5']
+        prodnum5 = df[df.drop_down ==product5].values[0][0]
+        form_input['productId'].append(prodnum5)
+        rating5 = request.form['rating5']
+        form_input['rating'].append(int(rating5))
+        form_input['username'].append(name)
+        form_input['height'].append(float(height))
+        form_input['weight'].append(float(weight))
+        form_input['bodyfat'].append(bodyfat)
+
 
     sf = gl.SFrame(df2[['userId', 'productId', 'rating']])
     user_info = gl.SFrame(df2[['userId', 'height', 'weight', 'bodyfat']])
